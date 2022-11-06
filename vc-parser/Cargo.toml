@@ -1,5 +1,5 @@
 [package]
-name = "lit-vc-parser"
+name = "vc-parser"
 version = "0.1.0"
 edition = "2021"
 cart-type = "rlib"
