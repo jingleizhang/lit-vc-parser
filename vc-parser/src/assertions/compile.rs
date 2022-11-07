@@ -88,7 +88,7 @@ impl Compile for Expr {
                 };
                 value_compiled.merge(new)
             }
-            _ => unimplemented!(),
+            //_ => unimplemented!(),
         }
     }
 }

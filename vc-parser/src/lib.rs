@@ -62,6 +62,7 @@ impl From<nom::error::Error<&str>> for Error {
 }
 
 pub mod assertions;
+pub mod vc;
 pub mod wasm;
 
 #[cfg(test)]
