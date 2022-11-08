@@ -10,15 +10,23 @@ extern "C" {
 }
 
 pub fn compute(e: String) -> (Result<Compiling, Error>, Result<i32, Error>) {
-    let compiling = compile(e.as_str());
+    let compiling = compile_vc(e.as_str());
     let running = compiling
         .clone()
-        .and_then(|c| run(e.as_str(), Some(c.clone())));
+        .and_then(|c| run_vc(e.as_str(), Some(c.clone())));
     (compiling, running)
+
+    //let compiling = compile(e.as_str());
+    // let running = compiling
+    //     .clone()
+    //     .and_then(|c| run(e.as_str(), Some(c.clone())));
+    // (compiling, running)
+
 }
 
 #[wasm_bindgen]
 pub fn compute_and_represent(e: String) -> JsValue {
+    //compile_vc
     let results = compute(e);
     let compiling_r = results.0.map(|c| CompilingRepresent::from_compiling(&c));
     let re = (compiling_r, results.1);

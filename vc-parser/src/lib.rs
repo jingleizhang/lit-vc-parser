@@ -3,6 +3,7 @@ use assertions::parser::program;
 use metered_wasmi::RuntimeValue;
 use nom::Finish;
 use serde::Serialize;
+use vc::VC;
 use wasm::{module_by_compiling, run_module};
 
 #[derive(Serialize, Debug, Clone, PartialEq)]
@@ -29,13 +30,14 @@ impl CompilingRepresent {
     }
 }
 
-pub fn compile(s: &str) -> Result<Compiling, Error> {
-    let (_input, exp) = program(s).finish()?;
+pub fn compile_vc(s: &str) -> Result<Compiling, Error> {
+    let vc: VC = serde_json::from_str::<VC>(s).unwrap();
+    let (_input, exp) = program(&vc.credential_subject.assertions).finish()?;
     Ok(exp.compile(Compiling::default()))
 }
 
-pub fn run(s: &str, compiled: Option<Compiling>) -> Result<i32, Error> {
-    let compiling = compiled.unwrap_or(compile(s)?);
+pub fn run_vc(s: &str, compiled: Option<Compiling>) -> Result<i32, Error> {
+    let compiling = compiled.unwrap_or(compile_vc(s)?);
     if compiling.errors.is_empty() {
         let module = module_by_compiling(compiling.clone());
         println!("{:?}", module);
