@@ -36,9 +36,11 @@ pub fn operatee(input: &str) -> IResult<&str, EvalExpr> {
 }
 
 pub fn operator(i: &str) -> IResult<&str, Operator> {
-    map(ws(one_of("+-")), |m| match m {
+    map(ws(one_of("+-><")), |m| match m {
         '+' => Operator::Plus,
         '-' => Operator::Minus,
+        '>' => Operator::GT,
+        '<' => Operator::LT,
         _ => panic!(),
     })(i)
 }
@@ -112,7 +114,9 @@ pub fn statement(input: &str) -> IResult<&str, Expr> {
     ws(alt((
         return_parser,
         //def_and_assign_par,
-        def_parser, assign_par, eval_parse,
+        def_parser,
+        assign_par,
+        eval_parse,
     )))(input)
 }
 

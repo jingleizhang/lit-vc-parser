@@ -5,8 +5,13 @@ use metered_wasmi::RuntimeValue;
 use parity_wasm::elements::Module;
 
 #[test]
-fn string_to_result_sample() {
+fn string_to_result_add_sub() {
     string_to_result("return 1+3-2", 2)
+}
+
+#[test]
+fn string_to_result_gt() {
+    string_to_result("return 1>3", 2)
 }
 
 fn string_to_result(s: &str, re: i32) {
@@ -75,5 +80,4 @@ fn test_or_modules() {
 }
 
 mod error;
-mod flows;
 mod variable;

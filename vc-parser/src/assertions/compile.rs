@@ -34,6 +34,8 @@ impl Compile for EvalExpr {
                     vec![match op {
                         &Operator::Plus => Instruction::I32Add,
                         &Operator::Minus => Instruction::I32Sub,
+                        &Operator::GT => Instruction::I32GtS,
+                        &Operator::LT => Instruction::I32LtS,
                     }]
                     .into(),
                 )
@@ -59,7 +61,7 @@ impl Compile for Expr {
     fn compile(&self, compiling: Compiling) -> Compiling {
         match self {
             Eval(eval) => eval.compile(compiling),
-            Return(ret)  => ret.compile(compiling),
+            Return(ret) => ret.compile(compiling),
             VarDef(name) => {
                 let new = match compiling.local_index(name) {
                     None => Compiling {
@@ -87,8 +89,7 @@ impl Compile for Expr {
                     },
                 };
                 value_compiled.merge(new)
-            }
-            //_ => unimplemented!(),
+            } //_ => unimplemented!(),
         }
     }
 }

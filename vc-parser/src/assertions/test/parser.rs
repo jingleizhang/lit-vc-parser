@@ -85,6 +85,8 @@ pub fn binary_expr(op: &str, l: i32, r: i32) -> EvalExpr {
         op: match op {
             "+" => Operator::Plus,
             "-" => Operator::Minus,
+            ">" => Operator::GT,
+            "<" => Operator::LT,
             _ => panic!(),
         },
         left: expr_int(l),
